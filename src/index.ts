@@ -7,7 +7,7 @@ import {
   useContainer,
 } from "routing-controllers";
 import Container, { Inject, Service, Token } from "typedi";
-import { AuthenticateUserPort } from "./core/ports/out/AuthenticateUserPort";
+import { AuthenticateUserPort } from "./domain/ports/out/AuthenticateUserPort";
 
 function server() {
   useContainer(Container);

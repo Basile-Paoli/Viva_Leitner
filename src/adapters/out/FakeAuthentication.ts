@@ -1,4 +1,4 @@
-import { AuthenticateUserPort } from "@/core/ports/out/AuthenticateUserPort";
+import { AuthenticateUserPort } from "domain/ports/out/AuthenticateUserPort";
 import { Service } from "typedi";
 
 @Service(AuthenticateUserPort)
