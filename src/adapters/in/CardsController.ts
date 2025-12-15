@@ -3,7 +3,7 @@ import {
   CreateCardDTO,
   CreateCardUseCase,
 } from "../../domain/ports/in/CreateCardUseCase";
-import { Body, CurrentUser, HeaderParam, JsonController, Post } from "routing-controllers";
+import { Body, CurrentUser, JsonController, Post } from "routing-controllers";
 import { Card } from "../../domain/models/Card";
 
 @JsonController("/cards")

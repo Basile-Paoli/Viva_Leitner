@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx --watch src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "vitest"
   },
   "author": "",
@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
-    "tsx": "^4.21.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "vitest": "^4.0.15"
   }
 }

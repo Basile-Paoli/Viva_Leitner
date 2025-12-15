@@ -1,23 +1,20 @@
 import "reflect-metadata";
 import "./adapters";
-import {
-  createExpressServer,
-  Get,
-  JsonController,
-  useContainer,
-} from "routing-controllers";
+import "./domain/services";
+import { createExpressServer, useContainer } from "routing-controllers";
 import Container, { Inject, Service, Token } from "typedi";
 import { LoginUserPort } from "./domain/ports/out/LoginUserPort";
 import { CardsController } from "./adapters/in/CardsController";
 import { ErrorHandler } from "./adapters/in/ErrorHandler";
+import { SaveCardPort } from "./domain/ports/out/SaveCardPort";
 
+useContainer(Container);
 function server() {
-  useContainer(Container);
   return createExpressServer({
     controllers: [CardsController],
     middlewares: [ErrorHandler],
     authorizationChecker: function (action, roles) {
-      return true; 
+      return true;
     },
     currentUserChecker: async function (action) {
       const authHeader = action.request.headers["authorization"];
@@ -36,5 +33,12 @@ function main() {
     console.log("Server is running on port 3000");
   });
 }
+
+Container.set(
+  SaveCardPort,
+  class {
+    createCard = () => console.log("Fake createCard called");
+  }
+);
 
 main();
