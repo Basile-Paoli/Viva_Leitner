@@ -1,3 +1,4 @@
+import { Category } from "./Category";
 import { Review } from "./Review";
 
 export type Card = {
@@ -9,3 +10,11 @@ export type Card = {
   tag?: string;
 };
 
+
+export type PublicCard = {
+  id: string;
+  question: string;
+  answer: string;
+  category: Category
+  tag?: string;
+}

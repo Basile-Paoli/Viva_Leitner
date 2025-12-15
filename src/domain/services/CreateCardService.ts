@@ -4,20 +4,18 @@ import {
   CreateCardUseCase,
 } from "../ports/in/CreateCardUseCase";
 import { CreateCardPort } from "../ports/out/CreateCardPort";
-import { Card } from "../models/Card";
+import { Card, PublicCard } from "../models/Card";
+import { Category } from "../models/Category";
 
 @Service(CreateCardUseCase)
 export class CreateCardService implements CreateCardUseCase {
-  constructor(@Inject(CreateCardPort) private saveCardPort: CreateCardPort) {
-    console.log("CreateCardService initialized");
-  }
+  constructor(@Inject(CreateCardPort) private saveCardPort: CreateCardPort) {}
 
-  async createCard(userId: string, card: CreateCardDTO): Promise<Card> {
-    const cardToCreate: Omit<Card, "id"> = {
+  async createCard(userId: string, card: CreateCardDTO): Promise<PublicCard> {
+    const cardToCreate: Omit<Card, "id" | "reviews"> = {
       createdAt: new Date(),
       question: card.question,
       answer: card.answer,
-      reviews: [],
       tag: card.tag,
     };
 
@@ -25,7 +23,10 @@ export class CreateCardService implements CreateCardUseCase {
 
     return {
       id,
-      ...cardToCreate,
+      category: Category.First,
+      question: card.question,
+      answer: card.answer,
+      tag: card.tag,
     };
   }
 }

@@ -9,7 +9,7 @@ import { Review } from "../../domain/models/Review";
 export class CreateCardRepository implements CreateCardPort {
   async createCard(
     userId: string,
-    card: Omit<Card, "id">
+    card: Omit<Card, "id" | "reviews">
   ): Promise<{ id: string }> {
     const [insertedCard] = await db
       .insert(cardsTable)
@@ -21,20 +21,6 @@ export class CreateCardRepository implements CreateCardPort {
       })
       .returning({ id: cardsTable.id });
 
-    if (card.reviews.length > 0) {
-      await this.createReviewsForCard(insertedCard.id, card.reviews);
-    }
-
     return { id: insertedCard.id.toString() };
-  }
-
-  private async createReviewsForCard(cardId: number, reviews: Review[]) {
-    db.insert(reviewsTable).values(
-      reviews.map((review) => ({
-        cardId,
-        reviewDate: review.reviewedAt,
-        success: review.isCorrect,
-      }))
-    );
   }
 }

@@ -2,10 +2,11 @@ import { describe, expect, test, vitest } from "vitest";
 import { CreateCardService } from "./CreateCardService";
 import { CreateCardPort } from "../ports/out/CreateCardPort";
 import { Card } from "../models/Card";
+import { Category } from "../models/Category";
 
 class MockSaveCardPort implements CreateCardPort {
   createCard = vitest.fn(
-    async (userId: string, card: Omit<Card, "id">): Promise<{ id: string }> => {
+    async (userId: string, card: Omit<Card, "id" | "reviews">): Promise<{ id: string }> => {
       return { id: "mock-card-id" };
     }
   );
@@ -25,22 +26,16 @@ describe("CreateCardService", () => {
     const createdCard = await createCardService.createCard(userId, cardData);
     expect(createdCard).toEqual({
       id: "mock-card-id",
-      createdAt: expect.any(Date),
       question: cardData.question,
+      category: Category.First,
       answer: cardData.answer,
-      reviews: [],
       tag: cardData.tag,
     });
-    expect(createdCard.createdAt.getTime()).toBeCloseTo(
-      new Date().getTime(),
-      -2
-    );
 
     expect(mockSaveCardPort.createCard).toHaveBeenCalledWith(userId, {
       createdAt: expect.any(Date),
       question: cardData.question,
       answer: cardData.answer,
-      reviews: [],
       tag: cardData.tag,
     });
   });
