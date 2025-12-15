@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import "./adapters"
+import "./adapters";
 import {
   createExpressServer,
   Get,
@@ -7,12 +7,25 @@ import {
   useContainer,
 } from "routing-controllers";
 import Container, { Inject, Service, Token } from "typedi";
-import { AuthenticateUserPort } from "./domain/ports/out/AuthenticateUserPort";
+import { LoginUserPort } from "./domain/ports/out/LoginUserPort";
+import { CardsController } from "./adapters/in/CardsController";
+import { ErrorHandler } from "./adapters/in/ErrorHandler";
 
 function server() {
   useContainer(Container);
   return createExpressServer({
-    controllers: [],
+    controllers: [CardsController],
+    middlewares: [ErrorHandler],
+    authorizationChecker: function (action, roles) {
+      return true; 
+    },
+    currentUserChecker: async function (action) {
+      const authHeader = action.request.headers["authorization"];
+      const loginUserPort = Container.get<LoginUserPort>(LoginUserPort);
+      const result = await loginUserPort.login("username", "password");
+      return { id: result.userId };
+    },
+    defaultErrorHandler: false,
   });
 }
 

@@ -1,15 +1,18 @@
 import { Token } from "typedi";
 import { Card } from "../../models/Card";
+import z from "zod";
 
-export type CreateCardDTO = {
-  question: string;
-  answer: string;
-  tag?: string;
-};
+export const CreateCardDTO = z.object({
+  question: z.string().min(1),
+  answer: z.string().min(1),
+  tag: z.string().optional(),
+});
+export type CreateCardDTO = z.infer<typeof CreateCardDTO>;
 
 export interface CreateCardUseCase {
   createCard(userId: string, card: CreateCardDTO): Promise<Card>;
 }
+
 export const CreateCardUseCase = new Token<CreateCardUseCase>(
   "CreateCardUseCase"
 );
