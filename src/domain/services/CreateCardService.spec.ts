@@ -1,9 +1,9 @@
 import { describe, expect, test, vitest } from "vitest";
 import { CreateCardService } from "./CreateCardService";
-import { SaveCardPort } from "../ports/out/SaveCardPort";
+import { CreateCardPort } from "../ports/out/CreateCardPort";
 import { Card } from "../models/Card";
 
-class MockSaveCardPort implements SaveCardPort {
+class MockSaveCardPort implements CreateCardPort {
   createCard = vitest.fn(
     async (userId: string, card: Omit<Card, "id">): Promise<{ id: string }> => {
       return { id: "mock-card-id" };

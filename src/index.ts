@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "dotenv/config"
 import "./adapters";
 import "./domain/services";
 import { createExpressServer, useContainer } from "routing-controllers";
@@ -6,7 +7,7 @@ import Container, { Inject, Service, Token } from "typedi";
 import { LoginUserPort } from "./domain/ports/out/LoginUserPort";
 import { CardsController } from "./adapters/in/CardsController";
 import { ErrorHandler } from "./adapters/in/ErrorHandler";
-import { SaveCardPort } from "./domain/ports/out/SaveCardPort";
+import { CreateCardPort } from "./domain/ports/out/CreateCardPort";
 
 useContainer(Container);
 function server() {
@@ -18,7 +19,7 @@ function server() {
     },
     currentUserChecker: async function (action) {
       const authHeader = action.request.headers["authorization"];
-      const loginUserPort = Container.get<LoginUserPort>(LoginUserPort);
+      const loginUserPort = Container.get(LoginUserPort);
       const result = await loginUserPort.login("username", "password");
       return { id: result.userId };
     },
@@ -33,12 +34,5 @@ function main() {
     console.log("Server is running on port 3000");
   });
 }
-
-Container.set(
-  SaveCardPort,
-  class {
-    createCard = () => console.log("Fake createCard called");
-  }
-);
 
 main();

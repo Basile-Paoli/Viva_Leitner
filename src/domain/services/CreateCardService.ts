@@ -1,12 +1,17 @@
 import { Inject, Service } from "typedi";
-import { CreateCardDTO, CreateCardUseCase } from "../ports/in/CreateCardUseCase";
-import { SaveCardPort } from "../ports/out/SaveCardPort";
+import {
+  CreateCardDTO,
+  CreateCardUseCase,
+} from "../ports/in/CreateCardUseCase";
+import { CreateCardPort } from "../ports/out/CreateCardPort";
 import { Card } from "../models/Card";
 
 @Service(CreateCardUseCase)
 export class CreateCardService implements CreateCardUseCase {
-  constructor(@Inject(SaveCardPort) private saveCardPort: SaveCardPort) {}
-  
+  constructor(@Inject(CreateCardPort) private saveCardPort: CreateCardPort) {
+    console.log("CreateCardService initialized");
+  }
+
   async createCard(userId: string, card: CreateCardDTO): Promise<Card> {
     const cardToCreate: Omit<Card, "id"> = {
       createdAt: new Date(),
@@ -16,7 +21,7 @@ export class CreateCardService implements CreateCardUseCase {
       tag: card.tag,
     };
 
-    const { id } = await this.saveCardPort.createCard(userId,cardToCreate);
+    const { id } = await this.saveCardPort.createCard(userId, cardToCreate);
 
     return {
       id,

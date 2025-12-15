@@ -1,0 +1,11 @@
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: flashcards_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgresql/data
