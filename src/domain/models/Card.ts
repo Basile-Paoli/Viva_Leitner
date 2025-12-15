@@ -1,3 +1,5 @@
+import { Review } from "./Review";
+
 export type Card = {
   id: string;
   createdAt: Date;
@@ -7,7 +9,3 @@ export type Card = {
   tag?: string;
 };
 
-export type Review = {
-  isCorrect: boolean;
-  reviewedAt: Date;
-};

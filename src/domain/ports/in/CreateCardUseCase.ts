@@ -1,5 +1,5 @@
-import { Card } from "domain/models/Card";
 import { Token } from "typedi";
+import { Card } from "../../models/Card";
 
 export type CreateCardDTO = {
   question: string;
@@ -8,7 +8,7 @@ export type CreateCardDTO = {
 };
 
 export interface CreateCardUseCase {
-  createCard(card: CreateCardDTO): Promise<Card>;
+  createCard(userId: string, card: CreateCardDTO): Promise<Card>;
 }
 export const CreateCardUseCase = new Token<CreateCardUseCase>(
   "CreateCardUseCase"
