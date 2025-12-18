@@ -1,20 +1,37 @@
+import "reflect-metadata";
 import { describe, expect, test, vitest } from "vitest";
 import { CreateCardService } from "./CreateCardService";
 import { CreateCardPort } from "../out/card/CreateCardPort";
 import { Card } from "../../../domain/models/Card";
 import { Category } from "../../../domain/models/Category";
+import { CardToCardViewMapper } from "../../mappers/cardToCardView";
+import Container from "typedi";
 
 class MockSaveCardPort implements CreateCardPort {
   createCard = vitest.fn(
-    async (userId: string, card: Omit<Card, "id" | "reviews">): Promise<{ id: string }> => {
-      return { id: "mock-card-id" };
+    async (
+      userId: string,
+      card: Omit<Card, "id" | "reviews">
+    ): Promise<Card> => {
+      return {
+        id: "mock-card-id",
+        question: card.question,
+        answer: card.answer,
+        tag: card.tag,
+        createdAt: card.createdAt,
+        reviews: [],
+      };
     }
   );
 }
+
 describe("CreateCardService", () => {
   test("Created card matches input data", async () => {
     const mockSaveCardPort = new MockSaveCardPort();
-    const createCardService = new CreateCardService(mockSaveCardPort);
+    const createCardService = new CreateCardService(
+      mockSaveCardPort,
+      Container.get(CardToCardViewMapper)
+    );
 
     const userId = "test-user-id";
     const cardData = {

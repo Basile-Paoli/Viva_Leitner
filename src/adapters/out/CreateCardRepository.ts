@@ -2,15 +2,14 @@ import { Service } from "typedi";
 import { CreateCardPort } from "../../application/ports/out/card/CreateCardPort";
 import { Card } from "../../domain/models/Card";
 import { db } from "./drizzle/db";
-import { cardsTable, reviewsTable } from "./drizzle/schema";
-import { Review } from "../../domain/models/Review";
+import { cardsTable } from "./drizzle/schema";
 
 @Service(CreateCardPort)
 export class CreateCardRepository implements CreateCardPort {
   async createCard(
     userId: string,
     card: Omit<Card, "id" | "reviews">
-  ): Promise<{ id: string }> {
+  ): Promise<Card> {
     const [insertedCard] = await db
       .insert(cardsTable)
       .values({
@@ -19,8 +18,19 @@ export class CreateCardRepository implements CreateCardPort {
         tag: card.tag,
         createdAt: card.createdAt,
       })
-      .returning({ id: cardsTable.id });
+      .returning();
 
-    return { id: insertedCard.id.toString() };
+    if (!insertedCard) {
+      throw new Error("Failed to insert card");
+    }
+
+    return {
+      id: insertedCard.id.toString(),
+      question: insertedCard.question,
+      answer: insertedCard.answer,
+      tag: insertedCard.tag ?? undefined,
+      createdAt: insertedCard.createdAt,
+      reviews: [],
+    };
   }
 }

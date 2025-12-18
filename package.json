@@ -23,6 +23,7 @@
     "@types/express": "^5.0.6",
     "@types/pg": "^8.16.0",
     "drizzle-kit": "^0.31.8",
+    "rollup-plugin-swc": "^0.2.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.21.0",
