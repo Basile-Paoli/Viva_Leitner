@@ -1,8 +1,8 @@
 import { describe, expect, test, vitest } from "vitest";
 import { CreateCardService } from "./CreateCardService";
-import { CreateCardPort } from "../ports/out/CreateCardPort";
-import { Card } from "../models/Card";
-import { Category } from "../models/Category";
+import { CreateCardPort } from "../out/card/CreateCardPort";
+import { Card } from "../../../domain/models/Card";
+import { Category } from "../../../domain/models/Category";
 
 class MockSaveCardPort implements CreateCardPort {
   createCard = vitest.fn(

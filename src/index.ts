@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import "dotenv/config"
 import "./adapters";
-import "./domain/services";
+import "./application/ports/in";
 import { createExpressServer, useContainer } from "routing-controllers";
 import Container, { Inject, Service, Token } from "typedi";
-import { LoginUserPort } from "./domain/ports/out/LoginUserPort";
+import { LoginUserPort } from "./application/ports/out/LoginUserPort";
 import { CardsController } from "./adapters/in/CardsController";
 import { ErrorHandler } from "./adapters/in/ErrorHandler";
-import { CreateCardPort } from "./domain/ports/out/CreateCardPort";
+import { CreateCardPort } from "./application/ports/out/card/CreateCardPort";
 
 useContainer(Container);
 function server() {

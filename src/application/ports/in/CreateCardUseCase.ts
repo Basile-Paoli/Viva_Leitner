@@ -1,6 +1,6 @@
 import { Token } from "typedi";
-import { Card, PublicCard } from "../../models/Card";
 import z from "zod";
+import { CardView } from "../out/card/CardView";
 
 export const CreateCardDTO = z.object({
   question: z.string().min(1),
@@ -10,7 +10,7 @@ export const CreateCardDTO = z.object({
 export type CreateCardDTO = z.infer<typeof CreateCardDTO>;
 
 export interface CreateCardUseCase {
-  createCard(userId: string, card: CreateCardDTO): Promise<PublicCard>;
+  createCard(userId: string, card: CreateCardDTO): Promise<CardView>;
 }
 
 export const CreateCardUseCase = new Token<CreateCardUseCase>(

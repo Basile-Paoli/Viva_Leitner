@@ -1,5 +1,5 @@
 import { Service } from "typedi";
-import { AuthenticateUserPort } from "../../domain/ports/out/AuthenticateUserPort";
+import { AuthenticateUserPort } from "../../application/ports/out/AuthenticateUserPort";
 
 @Service(AuthenticateUserPort)
 export class FakeAuthVerifier implements AuthenticateUserPort {

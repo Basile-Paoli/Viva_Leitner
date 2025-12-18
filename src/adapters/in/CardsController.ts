@@ -2,7 +2,7 @@ import { Inject, Service } from "typedi";
 import {
   CreateCardDTO,
   CreateCardUseCase,
-} from "../../domain/ports/in/CreateCardUseCase";
+} from "../../application/ports/in/CreateCardUseCase";
 import { Body, CurrentUser, JsonController, Post } from "routing-controllers";
 import { Card } from "../../domain/models/Card";
 

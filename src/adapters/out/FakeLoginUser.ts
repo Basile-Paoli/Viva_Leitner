@@ -1,5 +1,5 @@
 import { Service } from "typedi";
-import { LoginUserPort } from "../../domain/ports/out/LoginUserPort";
+import { LoginUserPort } from "../../application/ports/out/LoginUserPort";
 
 @Service(LoginUserPort)
 export class FakeLoginUser implements LoginUserPort {

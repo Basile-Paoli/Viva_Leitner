@@ -1,5 +1,5 @@
 import { Service } from "typedi";
-import { CreateCardPort } from "../../domain/ports/out/CreateCardPort";
+import { CreateCardPort } from "../../application/ports/out/card/CreateCardPort";
 import { Card } from "../../domain/models/Card";
 import { db } from "./drizzle/db";
 import { cardsTable, reviewsTable } from "./drizzle/schema";

@@ -1,4 +1,4 @@
-import { Card } from "../../models/Card";
+import { Card } from "../../../../domain/models/Card";
 import { Token } from "typedi";
 
 export interface CreateCardPort {
