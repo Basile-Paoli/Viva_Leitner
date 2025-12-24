@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RepositoryProvider } from './context/RepositoryContext';
-import { Dashboard } from './pages/Dashboard';
-import { Quiz } from './pages/Quiz';
-import { Library } from './pages/Library';
-import { CreateCard } from './pages/CreateCard';
+import { Dashboard } from './pages/Dashboard/Dashboard';
+import { Quiz } from './pages/Quiz/Quiz';
+import { Library } from './pages/Library/Library';
+import { CreateCard } from './pages/CreateCard/CreateCard';
 
 function App() {
   return (
