@@ -17,7 +17,7 @@ export const RepositoryProvider: React.FC<RepositoryProviderProps> = ({
   children,
   repositories,
 }) => {
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = '';
 
   const defaultRepositories: RepositoryContextType = {
     cardRepository: new CardApiAdapter(apiUrl),
