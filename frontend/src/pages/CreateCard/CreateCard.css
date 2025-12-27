@@ -1,0 +1,155 @@
+.create-card-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.create-card-back-button {
+  padding: 0.5rem 1rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.create-card-back-button:hover {
+  background-color: #5a6268;
+}
+
+.create-card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.create-card-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.create-card-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.create-card-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.create-card-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.create-card-input-group {
+  margin-bottom: 1.5rem;
+}
+
+.create-card-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.create-card-required {
+  color: #dc3545;
+}
+
+.create-card-optional {
+  color: #6c757d;
+  font-weight: 400;
+}
+
+.create-card-input,
+.create-card-textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.create-card-textarea {
+  resize: vertical;
+}
+
+.create-card-hint {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.create-card-message {
+  padding: 0.75rem;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.create-card-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.create-card-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.create-card-button-group {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+}
+
+.create-card-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.create-card-button.cancel {
+  background-color: #6c757d;
+  color: white;
+}
+
+.create-card-button.cancel:hover {
+  background-color: #5a6268;
+}
+
+.create-card-button.submit {
+  background-color: #28a745;
+  color: white;
+}
+
+.create-card-button.submit:hover {
+  background-color: #218838;
+}
+
+.create-card-button.submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .create-card-button-group {
+    grid-template-columns: 1fr;
+  }
+}
