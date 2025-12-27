@@ -11,7 +11,7 @@ export type CreateCardDTO = z.infer<typeof CreateCardDTO>;
 
 export interface ManageCardsUseCase {
   createCard(userId: string, card: CreateCardDTO): Promise<CardView>;
-  getCards(userId: string): Promise<CardView[]>;
+  getCards(userId: string, tag?: string): Promise<CardView[]>;
 }
 
 export const ManageCardsUseCase = new Token<ManageCardsUseCase>(

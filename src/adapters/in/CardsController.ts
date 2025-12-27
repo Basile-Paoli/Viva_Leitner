@@ -9,6 +9,7 @@ import {
   Get,
   JsonController,
   Post,
+  QueryParam,
 } from "routing-controllers";
 import { CardView } from "../../application/ports/out/card/CardView";
 
@@ -29,7 +30,10 @@ export class CardsController {
   }
 
   @Get("")
-  async getCards(@CurrentUser() userId: string): Promise<CardView[]> {
-    return this.createCardUseCase.getCards(userId);
+  async getCards(
+    @CurrentUser() userId: string,
+    @QueryParam("tag", { type: String }) tag?: string
+  ): Promise<CardView[]> {
+    return this.createCardUseCase.getCards(userId, tag);
   }
 }

@@ -8,11 +8,18 @@ import { Service } from "typedi";
 
 @Service(GetCardsPort)
 export class GetCardsRepository implements GetCardsPort {
-  async getCards(userId: string): Promise<Card[]> {
-    const cards = await db
+  async getCards(userId: string, tag?: string): Promise<Card[]> {
+    let query = db
       .select({ cardsTable, reviewsTable })
       .from(cardsTable)
-      .leftJoin(reviewsTable, eq(cardsTable.id, reviewsTable.cardId));
+      .leftJoin(reviewsTable, eq(cardsTable.id, reviewsTable.cardId))
+      .$dynamic();
+
+    if (tag) {
+      query = query.where(eq(cardsTable.tag, tag));
+    }
+
+    const cards = await query;
 
     const cardsMap = cards.reduce<Record<string, Card>>((map, row) => {
       const cardId = row.cardsTable.id;

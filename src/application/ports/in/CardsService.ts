@@ -14,8 +14,8 @@ export class CardsService implements ManageCardsUseCase {
     private cardToCardViewMapper: CardToCardViewMapper
   ) {}
 
-  getCards(userId: string): Promise<CardView[]> {
-    return this.getCardsPort.getCards(userId).then(cards =>
+  getCards(userId: string, tag?: string): Promise<CardView[]> {
+    return this.getCardsPort.getCards(userId, tag).then(cards =>
       cards.map(card => this.cardToCardViewMapper.map(card))
     );
   }
