@@ -8,6 +8,39 @@ import { Service } from "typedi";
 
 @Service(GetCardsPort)
 export class GetCardsRepository implements GetCardsPort {
+  async getCardById(userId: string, cardId: string): Promise<Card | null> {
+    const card = await db
+      .select({ cardsTable, reviewsTable })
+      .from(cardsTable)
+      .leftJoin(reviewsTable, eq(cardsTable.id, reviewsTable.cardId))
+      .where(eq(cardsTable.id, parseInt(cardId)));
+
+    if (!card[0]) {
+      return null;
+    }
+
+    const cardData = card[0].cardsTable;
+    const reviews: Review[] = card
+      .map((row) =>
+        row.reviewsTable
+          ? {
+              isCorrect: row.reviewsTable.success,
+              reviewedAt: row.reviewsTable.reviewDate,
+            }
+          : null
+      )
+      .filter((review) => review !== null);
+
+    return {
+      id: cardData.id.toString(),
+      createdAt: cardData.createdAt,
+      question: cardData.question,
+      answer: cardData.answer,
+      tag: cardData.tag || undefined,
+      reviews: reviews,
+    };
+  }
+
   async getCards(userId: string, tag?: string): Promise<Card[]> {
     let query = db
       .select({ cardsTable, reviewsTable })

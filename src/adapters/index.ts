@@ -3,3 +3,4 @@ import "./out/FakeLoginUser";
 import "./out/FakeAuthVerifier";
 import "./out/CreateCardRepository";
 import "./out/GetCardsRepository";
+import "./out/SaveReviewRepository";
