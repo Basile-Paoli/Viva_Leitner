@@ -31,7 +31,15 @@ export class CardApiAdapter implements CardRepository {
   }
 
   async submitAnswer(cardId: string, answer: SubmitAnswerDTO): Promise<AnswerResult> {
-    const response = await this.api.patch<AnswerResult>(`/cards/${cardId}/answer`, answer);
-    return response.data;
+    await this.api.patch(`/cards/${cardId}/answer`, {isValid: answer.isValid});
+
+    return {
+      cardId,
+      previousCategory: 'FIRST',
+      newCategory: answer.isValid ? 'SECOND' : 'FIRST',
+      isCorrect: answer.isValid,
+      message: answer.isValid ? 'Correct!' : 'Incorrect',
+      needsManualConfirmation: false
+    };
   }
 }

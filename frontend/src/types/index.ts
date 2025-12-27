@@ -34,7 +34,5 @@ export interface CreateCardDTO {
 }
 
 export interface SubmitAnswerDTO {
-  userAnswer?: string;
-  isCorrect?: boolean;
-  forceCorrect?: boolean;
+  isValid: boolean;
 }

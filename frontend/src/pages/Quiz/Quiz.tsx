@@ -36,31 +36,18 @@ export const Quiz: React.FC = () => {
     };
 
     const handleSubmitAnswer = async () => {
-        const currentCard = cards[currentIndex];
-        try {
-            const answerResult = await cardRepository.submitAnswer(currentCard.id, {
-                userAnswer: userAnswer,
-            });
-            setResult(answerResult);
-
-            if (!answerResult.needsManualConfirmation) {
-                setTimeout(() => {
-                    moveToNextCard();
-                }, 2500);
-            }
-        } catch (err) {
-            setError('Failed to submit answer. Please try again.');
-        }
+        setShowAnswer(true);
     };
 
     const handleConfirmCorrect = async () => {
         const currentCard = cards[currentIndex];
         try {
             const answerResult = await cardRepository.submitAnswer(currentCard.id, {
-                userAnswer: userAnswer,
-                isCorrect: true,
+                isValid: true,
             });
-            setResult({...answerResult, needsManualConfirmation: false});
+            answerResult.correctAnswer = currentCard.answer;
+            answerResult.userAnswer = userAnswer;
+            setResult(answerResult);
 
             setTimeout(() => {
                 moveToNextCard();
@@ -74,10 +61,11 @@ export const Quiz: React.FC = () => {
         const currentCard = cards[currentIndex];
         try {
             const answerResult = await cardRepository.submitAnswer(currentCard.id, {
-                userAnswer: userAnswer,
-                isCorrect: false,
+                isValid: false,
             });
-            setResult({...answerResult, needsManualConfirmation: false});
+            answerResult.correctAnswer = currentCard.answer;
+            answerResult.userAnswer = userAnswer;
+            setResult(answerResult);
 
             setTimeout(() => {
                 moveToNextCard();
@@ -188,9 +176,33 @@ export const Quiz: React.FC = () => {
                 )}
 
                 {showAnswer && !result && (
-                    <div className="quiz-answer-section">
-                        <h2 className="quiz-answer-title">Réponse correcte:</h2>
-                        <p className="quiz-answer-text">{currentCard.answer}</p>
+                    <div>
+                        <div className="quiz-answer-section">
+                            <h2 className="quiz-answer-title">Réponse correcte:</h2>
+                            <p className="quiz-answer-text">{currentCard.answer}</p>
+                        </div>
+                        <div className="quiz-comparison-section">
+                            <h3 className="quiz-comparison-title">Votre réponse:</h3>
+                            <p className="quiz-user-answer-text">{userAnswer}</p>
+                        </div>
+                        <div>
+                            <p className="quiz-confirmation-text">
+                                Est-ce que votre réponse était correcte ?
+                            </p>
+                            <div className="quiz-button-group">
+                                <button
+                                    onClick={handleConfirmWrong}
+                                    className="quiz-button wrong"
+                                >
+                                    J'ai eu faux
+                                </button>
+                                <button
+                                    onClick={handleConfirmCorrect}
+                                    className="quiz-button correct">
+                                    J'ai eu bon
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
 
