@@ -67,8 +67,9 @@ export class LeitnerSchedulingService {
     return nextReviewDateOnly <= onDateOnly;
   }
 
-  private getNextReviewDate(card: Card): Date | null {
+  getNextReviewDate(card: Card): Date | null {
     const category = this.getCardCategory(card);
+
     if (category === Category.Done) {
       return null;
     }

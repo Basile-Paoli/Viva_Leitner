@@ -106,9 +106,49 @@ describe("computeCardCategory", () => {
         createReview(true, "2025-01-08"),
       ]);
 
-      expect(() => new LeitnerSchedulingService().getCardCategory(card)).toThrow(
-        "Invalid consecutive correct reviews count: 8"
-      );
+      expect(() =>
+        new LeitnerSchedulingService().getCardCategory(card)
+      ).toThrow("Invalid consecutive correct reviews count: 8");
     });
+  });
+});
+
+describe("shouldReviewCard", () => {
+  it("should return true if the card is due for review on the given date", () => {
+    const reviews = [
+      createReview(true, "2025-01-01"),
+    ];
+    const card = createCard(reviews);
+    const service = new LeitnerSchedulingService();
+    //Category.Second => next review in 2 days
+    const reviewDate = new Date("2025-01-03");
+
+    const result = service.shouldReviewCard(card, reviewDate);
+    expect(result).toBe(true);
+  });
+
+  it("should return false if the card is not due for review on the given date", () => {
+    const reviews = [createReview(true, "2025-01-01")];
+    const card = createCard(reviews);
+    const service = new LeitnerSchedulingService();
+    const reviewDate = new Date("2025-01-02");
+    const result = service.shouldReviewCard(card, reviewDate);
+    expect(result).toBe(false);
+  });
+  it("should return false for cards in Done category", () => {
+    const reviews = [
+      createReview(true, "2025-01-01"),
+      createReview(true, "2025-01-02"),
+      createReview(true, "2025-01-03"),
+      createReview(true, "2025-01-04"),
+      createReview(true, "2025-01-05"),
+      createReview(true, "2025-01-06"),
+      createReview(true, "2025-01-07"),
+    ];
+    const card = createCard(reviews);
+    const service = new LeitnerSchedulingService();
+    const reviewDate = new Date("2025-03-01");
+    const result = service.shouldReviewCard(card, reviewDate);
+    expect(result).toBe(false);
   });
 });

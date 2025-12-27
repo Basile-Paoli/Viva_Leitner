@@ -6,6 +6,7 @@ import { Card } from "../../../domain/models/Card";
 import { Category } from "../../../domain/models/Category";
 import { CardToCardViewMapper } from "../../mappers/cardToCardView";
 import Container from "typedi";
+import { GetCardsPort } from "../out/card/GetCardsPort";
 
 class MockSaveCardPort implements CreateCardPort {
   createCard = vitest.fn(
@@ -25,11 +26,26 @@ class MockSaveCardPort implements CreateCardPort {
   );
 }
 
+class MockGetCardsPort implements GetCardsPort {
+  getCards = vitest.fn(
+    async (userId: string, tag?: string): Promise<Card[]> => {
+      return [];
+    }
+  );
+  getCardById = vitest.fn(
+    async (userId: string, cardId: string): Promise<Card | null> => {
+      return null;
+    }
+  );
+}
+
 describe("CreateCardService", () => {
   test("Created card matches input data", async () => {
     const mockSaveCardPort = new MockSaveCardPort();
+    const mockGetCardsPort = new MockGetCardsPort();
     const createCardService = new CardsService(
       mockSaveCardPort,
+      mockGetCardsPort,
       Container.get(CardToCardViewMapper)
     );
 
