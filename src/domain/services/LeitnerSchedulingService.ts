@@ -52,7 +52,19 @@ export class LeitnerSchedulingService {
     if (!nextReviewDate) {
       return false;
     }
-    return nextReviewDate <= onDate;
+    const nextReviewDateOnly = new Date(
+      nextReviewDate.getFullYear(),
+      nextReviewDate.getMonth(),
+      nextReviewDate.getDate()
+    );
+
+    const onDateOnly = new Date(
+      onDate.getFullYear(),
+      onDate.getMonth(),
+      onDate.getDate()
+    );
+
+    return nextReviewDateOnly <= onDateOnly;
   }
 
   private getNextReviewDate(card: Card): Date | null {
