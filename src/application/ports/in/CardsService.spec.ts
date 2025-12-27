@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { describe, expect, test, vitest } from "vitest";
-import { CreateCardService } from "./CreateCardService";
+import { CardsService } from "./CardsService";
 import { CreateCardPort } from "../out/card/CreateCardPort";
 import { Card } from "../../../domain/models/Card";
 import { Category } from "../../../domain/models/Category";
@@ -28,7 +28,7 @@ class MockSaveCardPort implements CreateCardPort {
 describe("CreateCardService", () => {
   test("Created card matches input data", async () => {
     const mockSaveCardPort = new MockSaveCardPort();
-    const createCardService = new CreateCardService(
+    const createCardService = new CardsService(
       mockSaveCardPort,
       Container.get(CardToCardViewMapper)
     );

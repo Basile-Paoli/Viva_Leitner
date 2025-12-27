@@ -9,10 +9,11 @@ export const CreateCardDTO = z.object({
 });
 export type CreateCardDTO = z.infer<typeof CreateCardDTO>;
 
-export interface CreateCardUseCase {
+export interface ManageCardsUseCase {
   createCard(userId: string, card: CreateCardDTO): Promise<CardView>;
+  getCards(userId: string): Promise<CardView[]>;
 }
 
-export const CreateCardUseCase = new Token<CreateCardUseCase>(
+export const ManageCardsUseCase = new Token<ManageCardsUseCase>(
   "CreateCardUseCase"
 );
